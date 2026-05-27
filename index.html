@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tashanna Edwards — Writer & Screenwriter</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#1F3D2B;--forest:#2D6A4F;--sage:#B7E4C7;--cream:#F5F0E8;--silver:#CED4DA;--mustard:#C9960C;--mustard-light:#E8B84B;--mustard-pale:#FFF8E7;--ink:#1a2a1f;--ink-soft:#3d5a47;--muted:#6b8c75;--white:#ffffff;--sidebar-w:260px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--cream);font-family:'Jost',sans-serif;color:var(--ink);min-height:100vh;}
+
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--deep);display:flex;flex-direction:column;padding:50px 36px;z-index:200;transition:transform 0.3s ease;}
+.sidebar-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);line-height:1.2;margin-bottom:4px;}
+.sidebar-title{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--mustard-light);margin-bottom:52px;}
+nav{display:flex;flex-direction:column;gap:4px;}
+nav a{text-decoration:none;font-size:0.88rem;color:rgba(255,255,255,0.6);padding:9px 14px;border-radius:6px;transition:all 0.25s ease;}
+nav a:hover{color:var(--white);background:rgba(255,255,255,0.1);}
+nav a.active{color:var(--mustard-light);border-left:2px solid var(--mustard);padding-left:12px;background:rgba(255,255,255,0.06);}
+.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;}
+.sidebar-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.7;}
+
+.hamburger{display:none;position:fixed;top:18px;left:18px;z-index:300;background:var(--deep);border:none;border-radius:8px;padding:10px 12px;cursor:pointer;flex-direction:column;gap:5px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:all 0.3s ease;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150;}
+.overlay.show{display:block;}
+
+.main{margin-left:var(--sidebar-w);padding:70px 80px 120px 80px;width:calc(100% - var(--sidebar-w));}
+
+.hero{margin-bottom:90px;opacity:0;transform:translateY(28px);animation:fadeUp 0.75s ease forwards 0.15s;}
+.eyebrow{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--mustard);margin-bottom:18px;font-weight:500;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,4.8rem);font-weight:600;line-height:1.05;color:var(--deep);margin-bottom:28px;}
+.hero h1 em{font-style:italic;color:var(--forest);}
+.hero-text{font-size:1rem;line-height:1.9;color:var(--ink-soft);max-width:680px;font-weight:300;}
+
+.section{margin-bottom:80px;opacity:0;transform:translateY(36px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.section.visible{opacity:1;transform:translateY(0);}
+
+.section-header{display:flex;align-items:baseline;gap:18px;margin-bottom:36px;padding-bottom:16px;border-bottom:1px solid var(--sage);}
+.section-label{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.section h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--mustard);margin-bottom:32px;margin-top:-4px;}
+
+.trivia-card{background:var(--deep);border-radius:14px;padding:48px 52px;position:relative;overflow:hidden;}
+.trivia-card::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(201,150,12,0.08);}
+.trivia-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--white);line-height:1.65;max-width:640px;}
+
+.quotes-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.quote-card{background:var(--white);border-radius:12px;padding:28px 32px 28px 40px;position:relative;border-left:4px solid var(--forest);transition:transform 0.25s ease,box-shadow 0.25s ease;}
+.quote-card:hover{transform:translateX(6px);box-shadow:0 8px 30px rgba(31,61,43,0.08);}
+.quote-mark{font-family:'Cormorant Garamond',serif;font-size:4.5rem;color:var(--mustard);opacity:0.2;position:absolute;top:8px;left:16px;line-height:1;}
+.quote-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--ink);line-height:1.75;margin-bottom:14px;}
+.quote-attr{font-size:0.72rem;color:var(--mustard);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;}
+
+.divider{height:1px;background:linear-gradient(to right,var(--sage),transparent);margin:60px 0;opacity:0.7;}
+.page-footer{margin-top:80px;padding-top:32px;border-top:1px solid var(--sage);display:flex;justify-content:space-between;align-items:center;opacity:0;animation:fadeUp 0.75s ease forwards 0.4s;}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink-soft);}
+.footer-note{font-size:0.75rem;color:var(--muted);}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:768px){
+  .hamburger{display:flex;}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;padding:70px 24px 80px;width:100%;}
+  .quotes-grid{grid-template-columns:1fr;}
+  .trivia-text{font-size:1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="hamburger" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-name">Tashanna Edwards</div>
+  <div class="sidebar-title">Writer · Screenwriter · Poet</div>
+  <nav>
+    <a href="index.html" class="active">About</a>
+    <a href="work.html">Work</a>
+    <a href="conferences.html">Conferences</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-quote">"Every story worth telling has already been lived by someone who didn't know they were living it."</div>
+  </div>
+</aside>
+
+<main class="main">
+  <section class="hero">
+    <div class="eyebrow">Writer · Screenwriter · Poet</div>
+    <h1>Stories that grow<br><em>with you.</em></h1>
+    <p class="hero-text">
+      I came to storytelling the long way around — which, honestly, is the only way I'd recommend. It started with poetry. Then the stories got too big for stanzas, and I found myself at the SCBWI New York Conference year after year, workshopping realistic fiction for young readers, learning what it means to write a childhood that feels true rather than tidy.
+      <br><br>
+      Somewhere along the way, a screenplay grabbed me by the collar and wouldn't let go. I studied screenwriting as an undergraduate and went even deeper into it in grad school during the pandemic. My thesis was my fiction manuscript — but screenplays had already claimed most of my heart and hours. I still have a thesis to present, and tuition hit me with a major roadblock. Money usually does.
+      <br><br>
+      But the projects kept coming: pilots, fiction manuscripts, stories that sat with editors long enough to mean something. I've lived in that space with my manuscripts, so why not bring my scripts along for the ride. The worst they can say is not yet.
+      <br><br>
+      Now I'm back — with cleaner instincts, a sharper eye for structure, and the same obsession with stories that meet young audiences exactly where they are. Coming-of-age stories told without condescension. Family narratives with real weight. Characters who are allowed to be complicated.
+      <br><br>
+      I write fiction about important topics that people don't like to talk about. I write scripts that encompass the kind of stories and specific faces I needed to see when I was growing up. That, it turns out, is a perfectly good reason to keep writing them.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="trivia">
+    <div class="trivia-card">
+      <div class="trivia-text">Every story worth telling has already been lived by someone who didn't know they were living it.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="inspiration">
+    <div class="section-header">
+      <span class="section-label">What Moves Me</span>
+    </div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">Poetry is the lens we use to interrogate the history we stand on and the future we stand for.</div>
+        <div class="quote-attr">— Amanda Gorman</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">What a wee little part of a person's life are his acts and his words! His real life is led in his head, and is known to none but himself.</div>
+        <div class="quote-attr">— Mark Twain</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">No one can make you feel inferior without your consent.</div>
+        <div class="quote-attr">— Eleanor Roosevelt</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">My favorite old car had no reverse gear. It taught me I could only go forward.</div>
+        <div class="quote-attr">— Flavia Weedn</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <div class="footer-name">Tashanna Edwards</div>
+    <div class="footer-note">© 2026 · tashannawrites.com</div>
+  </footer>
+</main>
+
+<script>
+const hamburger=document.getElementById('hamburger');
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+const sections=document.querySelectorAll('.section');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
