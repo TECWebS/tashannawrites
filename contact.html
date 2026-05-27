@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Tashanna Edwards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #1F3D2B; --forest: #2D6A4F; --sage: #B7E4C7;
+  --frost: #F8F9FA; --silver: #CED4DA;
+  --mustard: #C9960C; --mustard-light: #E8B84B; --mustard-pale: #FFF8E7;
+  --ink: #1a2a1f; --ink-soft: #3d5a47; --muted: #6b8c75;
+  --white: #ffffff; --sidebar-w: 260px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--frost); font-family: 'Jost', sans-serif; color: var(--ink); min-height: 100vh; }
+
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--deep); display: flex; flex-direction: column; padding: 50px 36px; z-index: 100; }
+.sidebar-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 4px; }
+.sidebar-title { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mustard-light); margin-bottom: 52px; }
+nav { display: flex; flex-direction: column; gap: 4px; }
+nav a { text-decoration: none; font-size: 0.88rem; color: rgba(255,255,255,0.6); padding: 9px 14px; border-radius: 6px; transition: all 0.25s ease; }
+nav a:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+nav a.active { color: var(--mustard-light); border-left: 2px solid var(--mustard); padding-left: 12px; background: rgba(255,255,255,0.06); }
+.sidebar-bottom { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+.sidebar-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+.main { margin-left: var(--sidebar-w); padding: 70px 72px 120px 72px; max-width: 900px; }
+
+.hero { margin-bottom: 60px; opacity: 0; transform: translateY(28px); animation: fadeUp 0.75s ease forwards 0.15s; }
+.eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mustard); margin-bottom: 18px; font-weight: 500; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 4vw, 3.8rem); font-weight: 600; line-height: 1.1; color: var(--deep); margin-bottom: 16px; }
+.hero-sub { font-size: 0.95rem; color: var(--muted); font-weight: 300; line-height: 1.75; max-width: 500px; }
+
+.contact-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; opacity: 0; transform: translateY(28px); animation: fadeUp 0.75s ease forwards 0.3s; }
+
+.contact-info { display: flex; flex-direction: column; gap: 28px; }
+.info-block { }
+.info-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mustard); font-weight: 500; margin-bottom: 6px; }
+.info-value { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--deep); line-height: 1.5; }
+.info-note { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.availability-card {
+  background: var(--deep);
+  border-radius: 12px;
+  padding: 24px 26px;
+  margin-top: 8px;
+}
+.avail-label { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mustard-light); font-weight: 500; margin-bottom: 10px; }
+.avail-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-bottom: 8px; line-height: 1.4; }
+.avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mustard); flex-shrink: 0; }
+
+/* FORM */
+.form-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 40px 40px;
+  border: 1px solid rgba(45,106,79,0.1);
+  box-shadow: 0 4px 20px rgba(31,61,43,0.06);
+}
+
+.form-group { margin-bottom: 24px; }
+.form-label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--forest); font-weight: 500; margin-bottom: 8px; }
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--silver);
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: var(--frost);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+  background: var(--white);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--silver); }
+.form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+.form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b8c75' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; cursor: pointer; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.submit-btn {
+  width: 100%;
+  padding: 15px 24px;
+  background: var(--deep);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  text-transform: uppercase;
+}
+.submit-btn:hover {
+  background: var(--forest);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(31,61,43,0.2);
+}
+.submit-btn:active { transform: translateY(0); }
+
+.success-msg {
+  display: none;
+  background: var(--mustard-pale);
+  border: 1px solid rgba(201,150,12,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 16px;
+  text-align: center;
+}
+.success-msg.show { display: block; }
+.success-msg p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--mustard); }
+
+.page-footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--sage); display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeUp 0.75s ease forwards 0.5s; }
+.footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--ink-soft); }
+.footer-note { font-size: 0.75rem; color: var(--muted); }
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; padding: 36px 20px 80px; } .contact-layout { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-name">Tashanna Edwards</div>
+  <div class="sidebar-title">Writer · Screenwriter · Poet</div>
+  <nav>
+    <a href="index.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="conferences.html">Conferences</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-quote">"Every story worth telling has already been lived by someone who didn't know they were living it."</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <section class="hero">
+    <div class="eyebrow">Get In Touch</div>
+    <h1>Let's talk<br>about a story.</h1>
+    <p class="hero-sub">Whether you're a producer, a development exec, a publisher, or a fellow writer — I'd love to hear from you.</p>
+  </section>
+
+  <div class="contact-layout">
+
+    <div class="contact-info">
+      <div class="info-block">
+        <div class="info-label">Based In</div>
+        <div class="info-value">Connecticut, USA</div>
+        <div class="info-note">Available for remote collaboration nationwide</div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-label">Platforms</div>
+        <div class="info-value">FilmFreeway</div>
+        <div class="info-note">Scripts available for review upon request</div>
+      </div>
+
+      <div class="availability-card">
+        <div class="avail-label">Currently available for</div>
+        <div class="avail-item"><span class="avail-dot"></span>Script coverage & feedback</div>
+        <div class="avail-item"><span class="avail-dot"></span>Option & development conversations</div>
+        <div class="avail-item"><span class="avail-dot"></span>Writing room opportunities</div>
+        <div class="avail-item"><span class="avail-dot"></span>Publishing queries</div>
+        <div class="avail-item"><span class="avail-dot"></span>Speaking & panels</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-group">
+        <div class="form-row">
+          <div>
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="Jane" id="firstName">
+          </div>
+          <div>
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="Smith" id="lastName">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="jane@studio.com" id="email">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">I am a...</label>
+        <select class="form-select" id="role">
+          <option value="">Select one</option>
+          <option>Producer / Development Executive</option>
+          <option>Literary Manager / Agent</option>
+          <option>Publisher / Editor</option>
+          <option>Fellow Writer</option>
+          <option>Festival / Competition</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Regarding</label>
+        <select class="form-select" id="subject">
+          <option value="">Select one</option>
+          <option>Zuhey (tween sitcom pilot)</option>
+          <option>Highway 16 (drama pilot)</option>
+          <option>Fiction / Publishing</option>
+          <option>Poetry</option>
+          <option>General Inquiry</option>
+          <option>Speaking / Panel</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me what you're working on or what you'd like to discuss..." id="message"></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="handleSubmit()">Send Message</button>
+
+      <div class="success-msg" id="successMsg">
+        <p>Thank you — I'll be in touch soon. The worst I can say is not yet.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-name">Tashanna Edwards</div>
+    <div class="footer-note">© 2026 · All rights reserved</div>
+  </footer>
+</main>
+
+<script>
+function handleSubmit() {
+  const name = document.getElementById('firstName').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  if (!name || !email || !message) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+  document.getElementById('successMsg').classList.add('show');
+  document.querySelector('.submit-btn').textContent = 'Sent ✓';
+  document.querySelector('.submit-btn').style.background = 'var(--forest)';
+}
+</script>
+</body>
+</html>

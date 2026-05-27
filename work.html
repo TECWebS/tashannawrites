@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Tashanna Edwards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #1F3D2B; --forest: #2D6A4F; --sage: #B7E4C7;
+  --frost: #F8F9FA; --silver: #CED4DA;
+  --mustard: #C9960C; --mustard-light: #E8B84B; --mustard-pale: #FFF8E7;
+  --ink: #1a2a1f; --ink-soft: #3d5a47; --muted: #6b8c75;
+  --white: #ffffff; --sidebar-w: 260px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--frost); font-family: 'Jost', sans-serif; color: var(--ink); min-height: 100vh; }
+
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--deep); display: flex; flex-direction: column; padding: 50px 36px; z-index: 100; }
+.sidebar-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 4px; }
+.sidebar-title { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mustard-light); margin-bottom: 52px; }
+nav { display: flex; flex-direction: column; gap: 4px; }
+nav a { text-decoration: none; font-size: 0.88rem; color: rgba(255,255,255,0.6); padding: 9px 14px; border-radius: 6px; transition: all 0.25s ease; }
+nav a:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+nav a.active { color: var(--mustard-light); border-left: 2px solid var(--mustard); padding-left: 12px; background: rgba(255,255,255,0.06); }
+.sidebar-bottom { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+.sidebar-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+.main { margin-left: var(--sidebar-w); padding: 70px 72px 120px 72px; max-width: 1000px; }
+
+.hero { margin-bottom: 70px; opacity: 0; transform: translateY(28px); animation: fadeUp 0.75s ease forwards 0.15s; }
+.eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mustard); margin-bottom: 18px; font-weight: 500; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 4vw, 3.8rem); font-weight: 600; line-height: 1.1; color: var(--deep); margin-bottom: 16px; }
+.hero-sub { font-size: 0.95rem; color: var(--muted); font-weight: 300; line-height: 1.7; max-width: 560px; }
+
+.section { margin-bottom: 72px; opacity: 0; transform: translateY(36px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--sage); }
+.section-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: var(--mustard); opacity: 0.6; line-height: 1; }
+.section-label { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.section h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--mustard); margin-bottom: 28px; margin-top: -4px; }
+
+/* PILOT CARDS */
+.pilot-card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 32px 36px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(45,106,79,0.1);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  position: relative;
+  overflow: hidden;
+}
+.pilot-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--mustard), var(--forest));
+}
+.pilot-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(31,61,43,0.1); }
+.pilot-type { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mustard); font-weight: 500; margin-bottom: 8px; }
+.pilot-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--deep); margin-bottom: 6px; }
+.pilot-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
+.pilot-logline { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.75; font-weight: 300; font-style: italic; border-left: 2px solid var(--sage); padding-left: 16px; }
+
+/* FICTION LIST */
+.fiction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fiction-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 24px 28px;
+  border: 1px solid rgba(45,106,79,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.fiction-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(31,61,43,0.08); }
+.fiction-type { font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--forest); font-weight: 500; margin-bottom: 7px; }
+.fiction-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--deep); margin-bottom: 6px; }
+.fiction-detail { font-size: 0.78rem; color: var(--muted); }
+
+/* PUBLISHED BOOK */
+.book-card {
+  background: var(--deep);
+  border-radius: 14px;
+  padding: 36px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.book-card:hover { transform: translateY(-3px); box-shadow: 0 14px 48px rgba(31,61,43,0.25); }
+.book-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mustard-light); font-weight: 500; margin-bottom: 10px; }
+.book-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+.book-pub { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+.book-link {
+  display: inline-block;
+  background: var(--mustard);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 11px 22px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.book-link:hover { background: var(--mustard-light); transform: translateY(-1px); }
+
+/* POEM CARDS with expand */
+.poem-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid rgba(45,106,79,0.1);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease;
+}
+.poem-card:hover { box-shadow: 0 6px 24px rgba(31,61,43,0.08); }
+.poem-header {
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.poem-header:hover { background: rgba(45,106,79,0.03); }
+.poem-header-left { flex: 1; }
+.poem-venue { font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mustard); font-weight: 500; margin-bottom: 5px; }
+.poem-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--deep); }
+.poem-toggle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--frost);
+  border: 1px solid var(--sage);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: var(--forest);
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  font-weight: 300;
+}
+.poem-card.open .poem-toggle { background: var(--forest); color: var(--white); transform: rotate(45deg); }
+.poem-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.poem-card.open .poem-body { max-height: 2000px; }
+.poem-content {
+  padding: 0 36px 28px 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  white-space: pre-line;
+  border-top: 1px solid var(--sage);
+  padding-top: 22px;
+  margin-top: 0;
+}
+.content-warning {
+  background: var(--mustard-pale);
+  border: 1px solid rgba(201,150,12,0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.78rem;
+  color: var(--mustard);
+  margin: 0 28px 16px;
+  display: none;
+}
+.poem-card.open .content-warning { display: block; }
+
+/* PUBLICATIONS */
+.pub-list { display: flex; flex-direction: column; }
+.pub-item {
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(183,228,199,0.5);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 16px;
+  transition: padding-left 0.25s ease;
+  cursor: default;
+}
+.pub-item:first-child { border-top: 1px solid rgba(183,228,199,0.5); }
+.pub-item:hover { padding-left: 10px; }
+.pub-venue { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mustard); margin-bottom: 4px; font-weight: 500; }
+.pub-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--deep); }
+.pub-link { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--forest); text-decoration: none; border-bottom: 1px solid var(--sage); transition: color 0.2s ease; }
+.pub-link:hover { color: var(--mustard); }
+.pub-year { font-size: 0.78rem; color: var(--muted); white-space: nowrap; margin-top: 4px; }
+
+.divider { height: 1px; background: linear-gradient(to right, var(--sage), transparent); margin: 56px 0; opacity: 0.7; }
+.page-footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--sage); display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeUp 0.75s ease forwards 0.4s; }
+.footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--ink-soft); }
+.footer-note { font-size: 0.75rem; color: var(--muted); }
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; padding: 36px 20px 80px; } .fiction-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-name">Tashanna Edwards</div>
+  <div class="sidebar-title">Writer · Screenwriter · Poet</div>
+  <nav>
+    <a href="index.html">About</a>
+    <a href="work.html" class="active">Work</a>
+    <a href="conferences.html">Conferences</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-quote">"Every story worth telling has already been lived by someone who didn't know they were living it."</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <section class="hero">
+    <div class="eyebrow">Portfolio</div>
+    <h1>The Work</h1>
+    <p class="hero-sub">Scripts, fiction, poetry, and published pieces — a career built one story at a time.</p>
+  </section>
+
+  <!-- PILOTS -->
+  <section class="section" id="scripts">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-label">Scripts & Pilots</span>
+    </div>
+    <h2>Scripts</h2>
+
+    <div class="pilot-card">
+      <div class="pilot-type">Tween Sitcom · Pilot</div>
+      <div class="pilot-title">Zuhey</div>
+      <div class="pilot-meta">Half-hour comedy</div>
+      <div class="pilot-logline">A fashion-challenged Black tween, her skateboarding ballerina bestie, and a designer's kid walk into Boston's most prestigious conservatory — and somehow decide to conquer the state robotics championship.</div>
+    </div>
+
+    <div class="pilot-card">
+      <div class="pilot-type">Hour Drama · Pilot</div>
+      <div class="pilot-title">Highway 16</div>
+      <div class="pilot-meta">One-hour scripted drama</div>
+      <div class="pilot-logline">When sixteen-year-old Kamryn — a preacher's daughter with a perfect life — instinctively reverse-maneuvers a runaway semi-truck on the day she gets her license, the rush awakens something in her that no Sunday sermon can quiet, and she finds herself drawn into the dangerous, exhilarating world of underground street racing.</div>
+    </div>
+
+    <h2 style="margin-top:40px;">Additional Scripts</h2>
+    <div class="fiction-grid">
+      <div class="fiction-card">
+        <div class="fiction-type">Screenplay · 5 pages</div>
+        <div class="fiction-title">A Tasty Recognition</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Screenplay · 5 pages</div>
+        <div class="fiction-title">Rematch</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Stage Play · 22 pages</div>
+        <div class="fiction-title">Trash Wars</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Screenplay · 6 pages</div>
+        <div class="fiction-title">The Hike to the Party</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Stage Play · 98 pages</div>
+        <div class="fiction-title">The Date that Never Ended</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FICTION -->
+  <section class="section" id="fiction">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-label">Fiction</span>
+    </div>
+    <h2>Fiction</h2>
+
+    <div style="margin-bottom: 24px;">
+      <a href="https://www.amazon.com/dp/1470025434" target="_blank" style="text-decoration:none;">
+        <div class="book-card">
+          <div>
+            <div class="book-label">Published · Amazon Publishing</div>
+            <div class="book-title">Brookie & the Bees</div>
+            <div class="book-pub">Amazon Publishing · 2009 / 2013</div>
+            <span class="book-link">View on Amazon ↗</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="fiction-grid">
+      <div class="fiction-card">
+        <div class="fiction-type">YA Novel</div>
+        <div class="fiction-title">Shooting Heaven</div>
+        <div class="fiction-detail">Young adult fiction</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Short Story</div>
+        <div class="fiction-title">Marble Fate</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Flash Fiction</div>
+        <div class="fiction-title">Illusive Lies</div>
+      </div>
+      <div class="fiction-card">
+        <div class="fiction-type">Children's Book</div>
+        <div class="fiction-title">My First Day of 6th Grade</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- POETRY -->
+  <section class="section" id="poetry">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-label">Poetry</span>
+    </div>
+    <h2>Published Poems</h2>
+
+    <div class="poem-card" id="poem-jefferson">
+      <div class="poem-header" onclick="togglePoem('poem-jefferson')">
+        <div class="poem-header-left">
+          <div class="poem-venue">Eastern Exposure · 2016</div>
+          <div class="poem-title">"Jefferson Avenue"</div>
+        </div>
+        <div class="poem-toggle">+</div>
+      </div>
+      <div class="poem-body">
+        <div class="poem-content">Never sat pretty in a dress for too long.
+After church, I was in shorts and a t-shirt,
+racing through the neighborhood, on foot,
+with the boys who lived down the street from me.
+
+I could keep up; sometimes I was faster.
+Climbing the huge boulder, a rock wall.
+Running through the woods —
+because we knew we weren't allowed.
+
+Some days, we only rode our bikes;
+Making laps around the identical apartments.
+We waved at the mothers of our friends;
+Their eyes watching us like moving targets.
+
+Never on the sidewalk,
+the road was our racetrack.
+On bikes we pedaled until our legs,
+frail and weak, stopped working.
+We cruised down steep hills.
+
+Underaged and uncertified, we helped them anyway.
+Spiders, insects, injured pigeons — we always did our best.
+Garden snakes, not too often hurt, my favorite.
+The adventures went on for hours.
+
+Sometimes hours like days, dragged on.
+Streetlights took their time waking up.
+The anticipation for sundown came
+through sleepy eyes and growling tummies.
+Still, I waited — we waited together.</div>
+      </div>
+    </div>
+
+    <div class="poem-card" id="poem-undressed">
+      <div class="poem-header" onclick="togglePoem('poem-undressed')">
+        <div class="poem-header-left">
+          <div class="poem-venue">The Exquisite Project Bill Library · 2018</div>
+          <div class="poem-title">"(Un)dressed"</div>
+        </div>
+        <div class="poem-toggle">+</div>
+      </div>
+      <div class="poem-body">
+        <div class="content-warning">⚠ Content note: This poem addresses sexual assault.</div>
+        <div class="poem-content">You wake up with the morning sun
+But somethings' not the same.
+You find yourself undressed and none,
+not one is there to blame.
+
+Someone you know has broken you,
+your legs will barely work,
+and all throughout the day a clue,
+your friend who always smirks.
+
+His hands he placed around your arm
+He thought he'd steal a kiss.
+But when you pulled away last night,
+his ego made a hiss.
+
+In his head, he plotted hard,
+revenge that he would take,
+And now your heart and soul is scarred.
+Your body sadly aches.
+
+Was wrong of him to force you down
+And this he knew was true.
+That's why he moved some drinks around
+He drugged you with the brew.
+
+Your friend he was until last night,
+he took what wasn't his.
+With no remorse and not a fight,
+he thought he was a whiz.
+
+But now you stand and somethings off
+A pain you can't receive.
+And now you wish they'd cut you off
+You feel dumb and naïve.
+
+It's sad to say the coward man,
+won't pay for all his sins.
+Knew all along this was his plan
+to add you to his wins.
+
+To him he's won this awful game
+it's just the way he thinks.
+With no regret and not a shame
+now touch makes your heart sink.
+
+The water does sound nice and clean,
+a savior so to speak.
+But justice is what many dream
+display how they are weak.
+
+If only it were done like that,
+report and show the proof.
+Then countless girls would all come fourth.
+There'd be no rapes to spoof.
+
+As many know the world shuts down,
+they cringe and walk away
+So now those hurt won't come around
+A twinge leads them astray
+
+That's how they think, society,
+It's never their concern.
+It can't be their anxiety.
+What is there in return?
+
+Some things are wrong within this space.
+Our values went away.
+For that we all should feel disgrace
+and live in great dismay.
+
+When people learn to heed their heart,
+The ones who harm will fall,
+Then times will shift, the hurt will rise
+No longer feeling small.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <h2 style="margin-bottom:20px; font-size:1.3rem;">Additional Poetry</h2>
+      <div class="fiction-grid">
+        <div class="fiction-card"><div class="fiction-title">"Roger's Lake"</div></div>
+        <div class="fiction-card"><div class="fiction-title">"Loose Tooth" <span style="font-size:0.75rem;color:var(--muted)">(rebus)</span></div></div>
+        <div class="fiction-card"><div class="fiction-title">"My Son, your Skin is Brown"</div></div>
+        <div class="fiction-card"><div class="fiction-title">"Shooting Heaven"</div></div>
+        <div class="fiction-card"><div class="fiction-title">"Epidermis"</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PUBLICATIONS -->
+  <section class="section" id="publications">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-label">Press & Publications</span>
+    </div>
+    <h2>Publications</h2>
+    <div class="pub-list">
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">The Exquisite Project Bill Library</div>
+          <div class="pub-title">"(Un)dressed"</div>
+        </div>
+        <div class="pub-year">2018</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Hartford Courant</div>
+          <a href="https://www.courant.com/2016/09/05/state-naacp-president-scot-esdaile-named-chairman-of-connecticuts-boxing-commission/" target="_blank" class="pub-link">"State NAACP President Scot Esdaile" ↗</a>
+        </div>
+        <div class="pub-year">2016</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">African-American Point of View</div>
+          <div class="pub-title">"State NAACP President Scot Esdaile"</div>
+        </div>
+        <div class="pub-year">2016</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Eastern Exposure</div>
+          <div class="pub-title">"Jefferson Avenue"</div>
+        </div>
+        <div class="pub-year">2016</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Campus Lantern ECSU</div>
+          <div class="pub-title">"The Hike to the Party"</div>
+        </div>
+        <div class="pub-year">2015</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Campus Lantern ECSU</div>
+          <div class="pub-title">"Banned Books Week"</div>
+        </div>
+        <div class="pub-year">2014</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Campus Lantern ECSU</div>
+          <div class="pub-title">"Reparatory Dance Troupe"</div>
+        </div>
+        <div class="pub-year">2014</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-venue">Amazon Publishing</div>
+          <div class="pub-title">"Brookie & the Bees"</div>
+        </div>
+        <div class="pub-year">2009 / 2013</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <div class="footer-name">Tashanna Edwards</div>
+    <div class="footer-note">© 2026 · All rights reserved</div>
+  </footer>
+</main>
+
+<script>
+function togglePoem(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
